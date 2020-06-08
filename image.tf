@@ -11,13 +11,12 @@ locals {
   image_url_mgmt    = "${var.ibmcloud_endpoint == "cloud.ibm.com" ? var.vnf_cos_mgmt_image_url : var.vnf_cos_mgmt_image_url_test}"
 }
 
-# Generating random ID
-resource "random_uuid" "test" {}
+
 
 resource "ibm_is_image" "cp_gw_custom_image" {
   depends_on       = ["random_uuid.test"]
   href             = "${local.image_url_gw}"
-  name             = "${var.vnf_vpc_gw_image_name}-${random_uuid.test.result}"
+  name             = "${var.vnf_vpc_gw_image_name}"
   operating_system = "centos-7-amd64"
 
   timeouts {
@@ -27,14 +26,14 @@ resource "ibm_is_image" "cp_gw_custom_image" {
 }
 
 data "ibm_is_image" "cp_gw_custom_image" {
-  name       = "${var.vnf_vpc_gw_image_name}-${random_uuid.test.result}"
+  name       = "${var.vnf_vpc_gw_image_name}"
   depends_on = ["ibm_is_image.cp_gw_custom_image"]
 }
 
 resource "ibm_is_image" "cp_mgmt_custom_image" {
   depends_on       = ["random_uuid.test"]
   href             = "${local.image_url_mgmt}"
-  name             = "${var.vnf_vpc_mgmt_image_name}-${random_uuid.test.result}"
+  name             = "${var.vnf_vpc_mgmt_image_name}"
   operating_system = "centos-7-amd64"
 
   timeouts {
@@ -44,6 +43,6 @@ resource "ibm_is_image" "cp_mgmt_custom_image" {
 }
 
 data "ibm_is_image" "cp_mgmt_custom_image" {
-  name       = "${var.vnf_vpc_mgmt_image_name}-${random_uuid.test.result}"
+  name       = "${var.vnf_vpc_mgmt_image_name}"
   depends_on = ["ibm_is_image.cp_mgmt_custom_image"]
 }
