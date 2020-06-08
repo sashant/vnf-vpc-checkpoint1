@@ -60,6 +60,14 @@ variable "vpc_name" {
 }
 
 ##############################################################################
+# vpc_id - VPC id where resources are to be provisioned.
+##############################################################################
+variable "vpc_id" {
+  default     = ""
+  description = "The id of your VPC where Checkpoint GW and Mgmt VSIs are to be provisioned."
+}
+
+##############################################################################
 # subnet_name - Subnet where resources are to be provisioned.
 ##############################################################################
 variable "subnet_id1" {
