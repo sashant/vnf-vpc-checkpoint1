@@ -18,6 +18,11 @@ data "ibm_is_instance_profile" "vnf_profile" {
   name = "${var.vnf_profile}"
 }
 
+data "ibm_is_vpc" "cp_vpc" {
+  name = "${var.vpc_name}"
+  identifier = "${var.vpc_id}"
+}
+
 ##############################################################################
 # Create CHECKPOINT firewall virtual server.
 ##############################################################################
@@ -31,7 +36,7 @@ resource "ibm_is_instance" "cp_gw_vsi" {
     subnet = "${data.ibm_is_subnet.cp_subnet1.id}"
   }
   network_interfaces {
-    name   = "${var.vnf_gw_second_interface_name}"
+    name   = "eth1"
     subnet = "${data.ibm_is_subnet.cp_subnet2.id}"
   }
 
