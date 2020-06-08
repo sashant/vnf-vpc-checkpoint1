@@ -107,7 +107,7 @@ resource "ibm_is_security_group_rule" "test_cr_sg_allow_ssh" {
 
 //security group rule to allow all for inbound
 resource "ibm_is_security_group_rule" "test_cr_sg_rule_all" {
-  depends_on = "data.ibm_is_vpc.cp_vpc"
+  depends_on = ["data.ibm_is_vpc.cp_vpc"]
   group     = "${ibm_is_vpc.cp_vpc.default_security_group}"
   direction = "inbound"
   remote    = "0.0.0.0/0"
