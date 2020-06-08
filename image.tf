@@ -14,7 +14,6 @@ locals {
 
 
 resource "ibm_is_image" "cp_gw_custom_image" {
-  depends_on       = ["random_uuid.test"]
   href             = "${local.image_url_gw}"
   name             = "${var.vnf_vpc_gw_image_name}"
   operating_system = "centos-7-amd64"
@@ -31,7 +30,6 @@ data "ibm_is_image" "cp_gw_custom_image" {
 }
 
 resource "ibm_is_image" "cp_mgmt_custom_image" {
-  depends_on       = ["random_uuid.test"]
   href             = "${local.image_url_mgmt}"
   name             = "${var.vnf_vpc_mgmt_image_name}"
   operating_system = "centos-7-amd64"
