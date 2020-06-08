@@ -14,7 +14,7 @@ variable "generation" {
 }
 
 variable "resource_group" {
-  default     = "Default"
+  default     = "default"
   description = "The resource group to use. If unspecified, the account's default resource group is used."
 }
 
