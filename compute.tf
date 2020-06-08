@@ -20,7 +20,7 @@ data "ibm_is_instance_profile" "vnf_profile" {
 
 data "ibm_is_vpc" "cp_vpc" {
   name = "${var.vpc_name}"
-  identifier = "${var.vpc_id}"
+  vpc_identifier = "${var.vpc_id}"
 }
 
 ##############################################################################
