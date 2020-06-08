@@ -98,10 +98,14 @@ data "external" "delete_custom_image1" {
   }
 }
 
+resource "ibm_is_security_group" "ckp_security_group" {
+    name = "ckp-security-group"
+    vpc = "${data.ibm_is_vpc.cp_vpc.id}"
+}
+
 //security group rule to allow ssh 
-resource "ibm_is_security_group_rule" "test_cr_sg_allow_ssh" {
-  depends_on = ["data.ibm_is_vpc.cp_vpc"]
-  group     = "${data.ibm_is_vpc.cp_vpc.default_security_group}"
+resource "ibm_is_security_group_rule" "test_ckp_sg_allow_ssh" {
+  group     = "${ibm_is_security_group.ckp_security_group.id}"
   direction = "inbound"
   remote     = "0.0.0.0/0"
   tcp {
@@ -111,9 +115,8 @@ resource "ibm_is_security_group_rule" "test_cr_sg_allow_ssh" {
 }
 
 //security group rule to allow all for inbound
-resource "ibm_is_security_group_rule" "test_cr_sg_rule_all" {
-  depends_on = ["data.ibm_is_vpc.cp_vpc"]
-  group     = "${data.ibm_is_vpc.cp_vpc.default_security_group}"
+resource "ibm_is_security_group_rule" "test_ckp_sg_rule_all" {
+  group     = "${ibm_is_security_group.ckp_security_group.id}"
   direction = "inbound"
   remote    = "0.0.0.0/0"
 }
