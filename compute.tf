@@ -31,9 +31,10 @@ resource "ibm_is_instance" "cp_gw_vsi" {
   profile = "${data.ibm_is_instance_profile.vnf_profile.name}"
   resource_group = "${data.ibm_resource_group.rg.id}"
 
-  primary_network_interface = {
+  primary_network_interface {
     subnet = "${data.ibm_is_subnet.cp_subnet1.id}"
   }
+
   network_interfaces {
     name   = "eth1"
     subnet = "${data.ibm_is_subnet.cp_subnet2.id}"
@@ -65,7 +66,7 @@ resource "ibm_is_instance" "cp_mgmt_vsi" {
   profile = "${data.ibm_is_instance_profile.vnf_profile.name}"
   resource_group = "${data.ibm_resource_group.rg.id}"
 
-  primary_network_interface = {
+  primary_network_interface {
     subnet = "${data.ibm_is_subnet.cp_subnet1.id}"
   }
   
