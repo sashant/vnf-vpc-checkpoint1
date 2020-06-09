@@ -17,6 +17,7 @@ resource "ibm_is_image" "cp_gw_custom_image" {
   href             = "${local.image_url_gw}"
   name             = "${var.vnf_vpc_gw_image_name}"
   operating_system = "centos-7-amd64"
+  resource_group   = "${data.ibm_resource_group.rg.id}"
 
   timeouts {
     create = "30m"
@@ -33,6 +34,7 @@ resource "ibm_is_image" "cp_mgmt_custom_image" {
   href             = "${local.image_url_mgmt}"
   name             = "${var.vnf_vpc_mgmt_image_name}"
   operating_system = "centos-7-amd64"
+  resource_group   = "${data.ibm_resource_group.rg.id}"
 
   timeouts {
     create = "30m"

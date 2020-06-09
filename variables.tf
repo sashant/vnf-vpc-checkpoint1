@@ -88,7 +88,7 @@ variable "ssh_key_name" {
 # vnf_vpc_gw_image_name - The name of the Checkpoint GateWay custom image to be provisioned in your IBM Cloud account.
 ##############################################################################
 variable "vnf_vpc_gw_image_name" {
-  default     = "checkpoint-gw-image"
+  default     = "checkpoint-gw-image2"
   description = "The name of the Checkpoint GW custom image to be provisioned in your IBM Cloud account."
 }
 
@@ -101,7 +101,7 @@ variable "ckp_sg" {
 # vnf_vpc_mgmt_image_name - The name of the Checkpoint Mgmt custom image to be provisioned in your IBM Cloud account.
 ##############################################################################
 variable "vnf_vpc_mgmt_image_name" {
-  default     = "checkpoint-mgmt-image"
+  default     = "checkpoint-mgmt-image2"
   description = "The name of the Checkpoint Mgmt custom image to be provisioned in your IBM Cloud account."
 }
 
@@ -142,4 +142,9 @@ variable "ibmcloud_endpoint" {
 variable "delete_custom_image_confirmation" {
   default     = ""
   description = "This variable is to get the confirmation from customers that they will delete the custom image manually, post successful installation of VNF instances. Customer should enter 'Yes' to proceed further with the installation."
+}
+
+variable "ibmcloud_api_key" {
+  default     = ""
+  description = "holds the user api key"
 }

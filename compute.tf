@@ -22,10 +22,36 @@ data "ibm_is_vpc" "cp_vpc" {
   name = "${var.vpc_name}"
 }
 
+resource "ibm_is_security_group" "ckp_security_group" {
+    name = "${var.ckp_sg}"
+    vpc = "${data.ibm_is_vpc.cp_vpc.id}"
+    resource_group = "${data.ibm_resource_group.rg.id}"
+}
+
+//security group rule to allow ssh
+resource "ibm_is_security_group_rule" "test_ckp_sg_allow_ssh" {
+  depends_on = ["ibm_is_security_group.ckp_security_group"]
+  group     = ibm_is_security_group.ckp_security_group.id
+  direction = "inbound"
+  remote     = "0.0.0.0/0"
+  tcp {
+    port_min = 22
+    port_max = 22
+  }
+}
+
+//security group rule to allow all for inbound
+resource "ibm_is_security_group_rule" "test_ckp_sg_rule_all" {
+  depends_on = ["ibm_is_security_group_rule.test_ckp_sg_allow_ssh"]
+  group     = ibm_is_security_group.ckp_security_group.id
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+}
 ##############################################################################
 # Create CHECKPOINT firewall virtual server.
 ##############################################################################
 resource "ibm_is_instance" "cp_gw_vsi" {
+  depends_on = ["ibm_is_security_group_rule.test_ckp_sg_rule_all"]
   name    = "${var.vnf_gw_instance_name}"
   image   = "${data.ibm_is_image.cp_gw_custom_image.id}"
   profile = "${data.ibm_is_instance_profile.vnf_profile.name}"
@@ -33,11 +59,13 @@ resource "ibm_is_instance" "cp_gw_vsi" {
 
   primary_network_interface {
     subnet = "${data.ibm_is_subnet.cp_subnet1.id}"
+    security_groups = [ibm_is_security_group.ckp_security_group.id]
   }
 
   network_interfaces {
     name   = "eth1"
     subnet = "${data.ibm_is_subnet.cp_subnet2.id}"
+    security_groups = [ibm_is_security_group.ckp_security_group.id]
   }
 
   vpc  = "${data.ibm_is_vpc.cp_vpc.id}"
@@ -61,6 +89,7 @@ resource "ibm_is_instance" "cp_gw_vsi" {
 # Create CHECKPOINT Management virtual server.
 ##############################################################################
 resource "ibm_is_instance" "cp_mgmt_vsi" {
+  depends_on = ["ibm_is_security_group_rule.test_ckp_sg_rule_all"]
   name    = "${var.vnf_mgmt_instance_name}"
   image   = "${data.ibm_is_image.cp_mgmt_custom_image.id}"
   profile = "${data.ibm_is_instance_profile.vnf_profile.name}"
@@ -68,6 +97,7 @@ resource "ibm_is_instance" "cp_mgmt_vsi" {
 
   primary_network_interface {
     subnet = "${data.ibm_is_subnet.cp_subnet1.id}"
+    security_groups = [ibm_is_security_group.ckp_security_group.id]
   }
   
   vpc  = "${data.ibm_is_vpc.cp_vpc.id}"
@@ -98,28 +128,6 @@ data "external" "delete_custom_image1" {
   }
 }
 
-resource "ibm_is_security_group" "ckp_security_group" {
-    name = "ckp-security-group"
-    vpc = "${data.ibm_is_vpc.cp_vpc.id}"
-}
-
-//security group rule to allow ssh 
-resource "ibm_is_security_group_rule" "test_ckp_sg_allow_ssh" {
-  group     = "${ibm_is_security_group.ckp_security_group.id}"
-  direction = "inbound"
-  remote     = "0.0.0.0/0"
-  tcp {
-    port_min = 22
-    port_max = 22
-  }
-}
-
-//security group rule to allow all for inbound
-resource "ibm_is_security_group_rule" "test_ckp_sg_rule_all" {
-  group     = "${ibm_is_security_group.ckp_security_group.id}"
-  direction = "inbound"
-  remote    = "0.0.0.0/0"
-}
 
 output "delete_custom_image1" {
   value = "${lookup(data.external.delete_custom_image1.result, "custom_image_id")}"
