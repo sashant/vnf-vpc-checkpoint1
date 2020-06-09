@@ -31,7 +31,7 @@ resource "ibm_is_security_group" "ckp_security_group" {
 //security group rule to allow ssh
 resource "ibm_is_security_group_rule" "test_ckp_sg_allow_ssh" {
   depends_on = ["ibm_is_security_group.ckp_security_group"]
-  group     = ibm_is_security_group.ckp_security_group.id
+  group     = "${ibm_is_security_group.ckp_security_group.id}"
   direction = "inbound"
   remote     = "0.0.0.0/0"
   tcp {
@@ -43,7 +43,7 @@ resource "ibm_is_security_group_rule" "test_ckp_sg_allow_ssh" {
 //security group rule to allow all for inbound
 resource "ibm_is_security_group_rule" "test_ckp_sg_rule_all" {
   depends_on = ["ibm_is_security_group_rule.test_ckp_sg_allow_ssh"]
-  group     = ibm_is_security_group.ckp_security_group.id
+  group     = "${ibm_is_security_group.ckp_security_group.id}"
   direction = "inbound"
   remote    = "0.0.0.0/0"
 }
@@ -59,13 +59,13 @@ resource "ibm_is_instance" "cp_gw_vsi" {
 
   primary_network_interface {
     subnet = "${data.ibm_is_subnet.cp_subnet1.id}"
-    security_groups = [ibm_is_security_group.ckp_security_group.id]
+    security_groups = ["${ibm_is_security_group.ckp_security_group.id}"]
   }
 
   network_interfaces {
     name   = "eth1"
     subnet = "${data.ibm_is_subnet.cp_subnet2.id}"
-    security_groups = [ibm_is_security_group.ckp_security_group.id]
+    security_groups = ["${ibm_is_security_group.ckp_security_group.id}"]
   }
 
   vpc  = "${data.ibm_is_vpc.cp_vpc.id}"
@@ -97,7 +97,7 @@ resource "ibm_is_instance" "cp_mgmt_vsi" {
 
   primary_network_interface {
     subnet = "${data.ibm_is_subnet.cp_subnet1.id}"
-    security_groups = [ibm_is_security_group.ckp_security_group.id]
+    security_groups = ["${ibm_is_security_group.ckp_security_group.id}"]
   }
   
   vpc  = "${data.ibm_is_vpc.cp_vpc.id}"
