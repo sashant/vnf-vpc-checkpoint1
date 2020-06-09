@@ -23,7 +23,7 @@ data "ibm_is_vpc" "cp_vpc" {
 }
 
 resource "ibm_is_security_group" "ckp_security_group" {
-    name = "${var.ckp_sg}"
+    name = "${var.vnf_security_group}"
     vpc = "${data.ibm_is_vpc.cp_vpc.id}"
     resource_group = "${data.ibm_resource_group.rg.id}"
 }

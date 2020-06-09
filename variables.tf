@@ -92,9 +92,9 @@ variable "vnf_vpc_gw_image_name" {
   description = "The name of the Checkpoint GW custom image to be provisioned in your IBM Cloud account."
 }
 
-variable "ckp_sg" {
+variable "vnf_security_group" {
   default     = "ckp-security-group"
-  description = "The security group for Checkpoint VPC"
+  description = "The security group for VNF VPC"
 }
 
 ##############################################################################
