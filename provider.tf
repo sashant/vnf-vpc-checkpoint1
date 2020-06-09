@@ -7,7 +7,7 @@ provider "ibm" {
   generation         = 2
   region             = "us-south"
   ibmcloud_timeout   = 300
-  resource_group = "VNF VPC Development"
+  resource_group     = "${var.resource_group}"
 }
 
 variable "region" {

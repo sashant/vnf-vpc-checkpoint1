@@ -124,7 +124,7 @@ data "external" "delete_custom_image1" {
 
   query = {
     custom_image_id   = "${data.ibm_is_image.cp_gw_custom_image.id}"
-    ibmcloud_endpoint = "${var.ibmcloud_endpoint}"
+    region            = "${var.region}"
   }
 }
 
@@ -140,7 +140,7 @@ data "external" "delete_custom_image2" {
 
   query = {
     custom_image_id   = "${data.ibm_is_image.cp_mgmt_custom_image.id}"
-    ibmcloud_endpoint = "${var.ibmcloud_endpoint}"
+    region            = "${var.region}"
   }
 }
 

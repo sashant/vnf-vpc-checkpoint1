@@ -88,7 +88,7 @@ variable "ssh_key_name" {
 # vnf_vpc_gw_image_name - The name of the Checkpoint GateWay custom image to be provisioned in your IBM Cloud account.
 ##############################################################################
 variable "vnf_vpc_gw_image_name" {
-  default     = "checkpoint-gw-image2"
+  default     = "checkpoint-gw-image"
   description = "The name of the Checkpoint GW custom image to be provisioned in your IBM Cloud account."
 }
 
@@ -101,7 +101,7 @@ variable "ckp_sg" {
 # vnf_vpc_mgmt_image_name - The name of the Checkpoint Mgmt custom image to be provisioned in your IBM Cloud account.
 ##############################################################################
 variable "vnf_vpc_mgmt_image_name" {
-  default     = "checkpoint-mgmt-image2"
+  default     = "checkpoint-mgmt-image"
   description = "The name of the Checkpoint Mgmt custom image to be provisioned in your IBM Cloud account."
 }
 
