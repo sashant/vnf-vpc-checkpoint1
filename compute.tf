@@ -76,8 +76,8 @@ resource "ibm_is_instance" "cp_gw_vsi" {
 
   //User can configure timeouts
   timeouts {
-    create = "10m"
-    delete = "10m"
+    create = "15m"
+    delete = "15m"
   }
   # Hack to handle some race condition; will remove it once have root caused the issues.
   provisioner "local-exec" {
@@ -108,8 +108,8 @@ resource "ibm_is_instance" "cp_mgmt_vsi" {
 
   //User can configure timeouts
   timeouts {
-    create = "10m"
-    delete = "10m"
+    create = "15m"
+    delete = "15m"
   }
   # Hack to handle some race condition; will remove it once have root caused the issues.
   provisioner "local-exec" {
