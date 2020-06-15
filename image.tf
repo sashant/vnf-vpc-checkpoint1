@@ -26,8 +26,7 @@ resource "ibm_is_image" "cp_gw_custom_image" {
 }
 
 data "ibm_is_image" "cp_gw_custom_image" {
-  name       = "${var.vnf_vpc_gw_image_name}"
-  depends_on = ["ibm_is_image.cp_gw_custom_image"]
+  name       = "${ibm_is_image.cp_gw_custom_image.name}"
 }
 
 resource "ibm_is_image" "cp_mgmt_custom_image" {
@@ -43,6 +42,5 @@ resource "ibm_is_image" "cp_mgmt_custom_image" {
 }
 
 data "ibm_is_image" "cp_mgmt_custom_image" {
-  name       = "${var.vnf_vpc_mgmt_image_name}"
-  depends_on = ["ibm_is_image.cp_mgmt_custom_image"]
+  name       = "${ibm_is_image.cp_mgmt_custom_image.name}"
 }

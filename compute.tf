@@ -75,10 +75,10 @@ resource "ibm_is_instance" "cp_gw_vsi" {
   # user_data = "$(replace(file("cp-userdata.sh"), "cp-LICENSE-REPLACEMENT", var.vnf_license)"
 
   //User can configure timeouts
-  /*timeouts {
+  timeouts {
     create = "15m"
     delete = "15m"
-  }*/
+  }
   # Hack to handle some race condition; will remove it once have root caused the issues.
   provisioner "local-exec" {
     command = "sleep 30"
@@ -107,10 +107,10 @@ resource "ibm_is_instance" "cp_mgmt_vsi" {
   # user_data = "$(replace(file("cp-userdata.sh"), "cp-LICENSE-REPLACEMENT", var.vnf_license)"
 
   //User can configure timeouts
-  /*timeouts {
+  timeouts {
     create = "15m"
     delete = "15m"
-  }*/
+  }
   # Hack to handle some race condition; will remove it once have root caused the issues.
   provisioner "local-exec" {
     command = "sleep 30"
