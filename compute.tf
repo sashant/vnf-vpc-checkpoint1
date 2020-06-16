@@ -51,9 +51,9 @@ resource "ibm_is_security_group_rule" "test_ckp_sg_rule_all" {
 # Create CHECKPOINT firewall virtual server.
 ##############################################################################
 resource "ibm_is_instance" "cp_gw_vsi" {
-  depends_on = ["ibm_is_security_group_rule.test_ckp_sg_rule_all", "data.ibm_is_image.cp_gw_custom_image"]
+  depends_on = ["ibm_is_security_group_rule.test_ckp_sg_rule_all", "ibm_is_image.cp_gw_custom_image"]
   name    = "${var.vnf_gw_instance_name}"
-  image   = "${data.ibm_is_image.cp_gw_custom_image.id}"
+  image   = "${ibm_is_image.cp_gw_custom_image.id}"
   profile = "${data.ibm_is_instance_profile.vnf_profile.name}"
   resource_group = "${data.ibm_resource_group.rg.id}"
 
@@ -89,9 +89,9 @@ resource "ibm_is_instance" "cp_gw_vsi" {
 # Create CHECKPOINT Management virtual server.
 ##############################################################################
 resource "ibm_is_instance" "cp_mgmt_vsi" {
-  depends_on = ["ibm_is_security_group_rule.test_ckp_sg_rule_all", "data.ibm_is_image.cp_mgmt_custom_image"]
+  depends_on = ["ibm_is_security_group_rule.test_ckp_sg_rule_all", "ibm_is_image.cp_mgmt_custom_image"]
   name    = "${var.vnf_mgmt_instance_name}"
-  image   = "${data.ibm_is_image.cp_mgmt_custom_image.id}"
+  image   = "${ibm_is_image.cp_mgmt_custom_image.id}"
   profile = "${data.ibm_is_instance_profile.vnf_profile.name}"
   resource_group = "${data.ibm_resource_group.rg.id}"
 
